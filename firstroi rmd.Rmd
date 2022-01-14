@@ -1,0 +1,111 @@
+---
+title: "Markup"
+author: "Miguel Angel Bustos"
+date: "14-01-2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+**Introduction**
+
+The basic rule of a successful business model is to sell a product or service for more than it costs to produce or provide it. The Markup or markon it´s the difference between the cost of a product or service and its sale price and can be calculated in your local currency or as a percentage of either cost or selling price.
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(comment = NA)
+```
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+
+```
+
+One coffe cost and it´s markup
+
+```{r}
+one_coffe_cost <- 800
+one_coffe_sell <- 1000
+one_coffe_ratio <- 200
+one_coffe_markup <- one_coffe_ratio/one_coffe_cost*100
+
+per_coffe_markup <- data.frame(one_coffe_cost = c(800),
+                   one_coffe_sell = c(1000),
+                   one_coffe_ratio = c(one_coffe_sell-one_coffe_cost),
+                   one_coffe_markup = c(one_coffe_ratio/one_coffe_cost*100))
+per_coffe_markup
+```
+
+**Plotting the coffe markup**
+
+This is the one coffe markup, reduce costs per coffe to obtain a major markup, now the strategy for this situation is how to do that, good negotiations or extended contracts are just of many options that can be evaluated.
+
+```{r}
+boxplot(per_coffe_markup, notch = TRUE, border = "Orange", ylim = c(0,4400))
+```
+
+**p*q price per quantity**
+
+The formula for revenue it´s p*q and here are some vectors of one coffe values:
+
+```{r}
+
+c <- 800 # cost (one_coffe_cost)
+p <- 1000 # p price (one_coffe_sell)
+q <- 5500 # q quantity or revenue
+
+```
+
+
+**Weekly sales**
+
+Now the week sales situation it´s 5500 coffes were sold, now this is the gross profit and week markup
+
+```{r}
+
+COGS <- q*c # Cost of goods sold 4.400.000
+COGS
+revenue <- p*q # 5.500.000
+revenue
+Gross_Profit <- revenue - COGS # 5.500.000 - 4.400.000
+Gross_Profit
+Gross_Profit/COGS # This is the week markup
+
+```
+
+*The week markup*
+
+Now the data it´s well ordered in the week, obtaining a 25% markup, that´s a good markdown
+
+```{r}
+
+week_markup <- data.frame(c_cost = c(800),
+                   p_price = c(1000),
+                   q_quantity = c(5500),
+                   COGS = c(q*c),
+                   revenue = c(p*q),
+                   gross_profit = c(revenue - COGS),
+                   weekmarkup = c(100*(revenue-COGS)/COGS))
+week_markup
+
+```
+
+**Ploting the markup week**
+
+Now this is the markup visualization sales week
+
+```{r}
+
+boxplot(week_markup %>% select("COGS", "revenue", "gross_profit", "weekmarkup"), 
+        norch = T, 
+        border = c("Blue", "Green", "Yellow", "Red"),
+        main = "Week Summary : 25% of Markup",
+        ylab = "length",
+        xlab = "Concept",
+        ylim = c(0,44000000), notch = T, las = 1, names = c("Cost of Goods", "Revenue", "Profit", "Markup")) #las 1 or 2
+
+```
+
+
+
+        
